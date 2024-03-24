@@ -48,6 +48,26 @@ public class ScoreboardTests
     }
 
     [Fact]
+    public void RemoveMatchTest()
+    {
+        var sut = new Scoreboard();
+
+        var matchId1 = sut.StartNew("Mexico", "Canada");
+        var matchId2 = sut.StartNew("Mexico", "Canada");
+
+        var matchList = sut.GetInprogressMatches();
+
+        matchList.Should().HaveCount(2);
+
+        sut.RemoveMatch(matchId1);
+
+        matchList = sut.GetInprogressMatches();
+        matchList.Should().HaveCount(1);
+
+        matchList.First().Id.Should().Be(matchId2);
+    }
+
+    [Fact]
     public void UpdateScoreTest()
     {
         var sut = new Scoreboard();
@@ -74,6 +94,13 @@ public class Scoreboard
         _matches.Add(newMath);
 
         return newMath.Id;
+    }
+
+    public void RemoveMatch(Guid matchId)
+    {
+        var match = _matches.First(x => x.Id == matchId);
+
+        _matches.Remove(match);
     }
 
     public void UpdateScore(Guid matchId, int homeTeamScore, int awayTeamScore)
