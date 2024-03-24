@@ -2,36 +2,32 @@ namespace FootballWorldCupScoreboard;
 
 public class Scoreboard
 {
-    private List<Match> _matches { get; init; } = [];
+    private Dictionary<Guid, Match> _matches { get; init; } = [];
 
     public Guid StartNew(Team homeTeam, Team awayTeam)
     {
-        var newMath = new Match(homeTeam, awayTeam);
+        var newMath = new Match(homeTeam, awayTeam, 0, 0);
 
-        _matches.Add(newMath);
+        _matches.Add(newMath.Id, newMath);
 
         return newMath.Id;
     }
 
     public void RemoveMatch(Guid matchId)
     {
-        var match = _matches.First(x => x.Id == matchId);
-
-        _matches.Remove(match);
+        _matches.Remove(matchId);
     }
 
     public void UpdateScore(Guid matchId, int homeTeamScore, int awayTeamScore)
     {
-        var match = _matches
-            .First(x => x.Id == matchId);
+        var oldMatch = _matches[matchId];
 
-        match.HomeTeamScore = homeTeamScore;
-        match.AwayTeamScore = awayTeamScore;
+        _matches[matchId] = oldMatch with { HomeTeamScore = homeTeamScore, AwayTeamScore = awayTeamScore };
     }
 
     public List<Match> GetInprogressMatches()
     {
-        return _matches
+        return _matches.Values
             .OrderByDescending(x => x.TotalScore)
             .ThenByDescending(x => x.StartDate)
             .ToList();

@@ -20,7 +20,6 @@ public class ScoreboardTests
         sut.UpdateScore(match4, 6, 6);
         sut.UpdateScore(match5, 3, 1);
 
-
         var inprogressMatchesList = sut.GetInprogressMatches();
 
         inprogressMatchesList.Should().HaveCount(5);

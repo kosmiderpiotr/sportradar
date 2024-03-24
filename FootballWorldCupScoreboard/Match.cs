@@ -1,25 +1,12 @@
 namespace FootballWorldCupScoreboard;
 
-public class Match
+
+public record Match(Team HomeTeam, Team AwayTeam, int HomeTeamScore, int AwayTeamScore)
 {
     public Guid Id { get; } = Guid.NewGuid();
 
-    public DateTime StartDate { get; init; } = DateTime.Now;
-
-    public Team HomeTeam { get; }
-
-    public Team AwayTeam { get; }
-
-    public int HomeTeamScore { get; set; } = 0;
-
-    public int AwayTeamScore { get; set; } = 0;
+    public DateTime StartDate { get; } = DateTime.Now;
 
     public int TotalScore => HomeTeamScore + AwayTeamScore;
 
-    public Match(Team homeTeam, Team awayTeam)
-    {
-        HomeTeam = homeTeam;
-
-        AwayTeam = awayTeam;
-    }
 }
