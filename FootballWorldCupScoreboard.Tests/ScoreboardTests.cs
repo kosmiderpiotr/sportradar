@@ -77,4 +77,32 @@ public class ScoreboardTests
         match.HomeTeamScore.Should().Be(0);
         match.AwayTeamScore.Should().Be(5);
     }
+
+    [Fact]
+    public void RemoveNonExistingMatchTest()
+    {
+        var sut = new Scoreboard();
+
+        sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
+
+        sut.RemoveMatch(Guid.NewGuid());
+
+        var matches = sut.GetInprogressMatches();
+
+        matches.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void UpdateNonExistingMatchTest()
+    {
+        var sut = new Scoreboard();
+
+        sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
+
+        sut.UpdateScore(Guid.NewGuid(), 20, 1);
+
+        var matches = sut.GetInprogressMatches();
+
+        matches.Should().HaveCount(1);
+    }
 }

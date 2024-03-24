@@ -18,11 +18,16 @@ public class Scoreboard
         _matches.Remove(matchId);
     }
 
-    public void UpdateScore(Guid matchId, int homeTeamScore, int awayTeamScore)
+    public bool UpdateScore(Guid matchId, int homeTeamScore, int awayTeamScore)
     {
+        if (!_matches.ContainsKey(matchId))
+            return false;
+
         var oldMatch = _matches[matchId];
 
         _matches[matchId] = oldMatch with { HomeTeamScore = homeTeamScore, AwayTeamScore = awayTeamScore };
+
+        return true;
     }
 
     public List<Match> GetInprogressMatches()
