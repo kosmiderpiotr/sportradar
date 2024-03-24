@@ -20,6 +20,12 @@ public class Scoreboard
 
     public bool UpdateScore(Guid matchId, int homeTeamScore, int awayTeamScore)
     {
+        if (homeTeamScore < 0)
+            throw new ArgumentException("Home team score can't be negative");
+
+        if (awayTeamScore < 0)
+            throw new ArgumentException("Away team score can't be negative");
+
         if (!_matches.ContainsKey(matchId))
             return false;
 

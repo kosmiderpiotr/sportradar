@@ -105,4 +105,20 @@ public class ScoreboardTests
 
         matches.Should().HaveCount(1);
     }
+
+    [Fact]
+    public void UpdateMatchWithNegativeScoreTest()
+    {
+        var sut = new Scoreboard();
+        var matchId = sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
+
+        sut.Invoking(y => y.UpdateScore(matchId, -1, 0))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Home team score can't be negative");
+
+        sut.Invoking(y => y.UpdateScore(matchId, 0, -1))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Away team score can't be negative");
+
+    }
 }
