@@ -6,9 +6,9 @@ public class Match
 
     public DateTime StartDate { get; init; } = DateTime.Now;
 
-    public string HomeTeam { get; }
+    public Team HomeTeam { get; }
 
-    public string AwayTeam { get; }
+    public Team AwayTeam { get; }
 
     public int HomeTeamScore { get; set; } = 0;
 
@@ -16,7 +16,7 @@ public class Match
 
     public int TotalScore => HomeTeamScore + AwayTeamScore;
 
-    public Match(string homeTeam, string awayTeam)
+    public Match(Team homeTeam, Team awayTeam)
     {
         HomeTeam = homeTeam;
 

@@ -8,11 +8,11 @@ public class ScoreboardTests
     public void GetInprogressMatchesTest()
     {
         var sut = new Scoreboard();
-        var match1 = sut.StartNew("Mexico", "Canada");
-        var match2 = sut.StartNew("Spain", "Brazil");
-        var match3 = sut.StartNew("Germany", "France");
-        var match4 = sut.StartNew("Uruguay", "Italy");
-        var match5 = sut.StartNew("Argentina", "Australia");
+        var match1 = sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
+        var match2 = sut.StartNew(new Team(CountryEnum.Spain), new Team(CountryEnum.Brazil));
+        var match3 = sut.StartNew(new Team(CountryEnum.Germany), new Team(CountryEnum.France));
+        var match4 = sut.StartNew(new Team(CountryEnum.Uruguay), new Team(CountryEnum.Italy));
+        var match5 = sut.StartNew(new Team(CountryEnum.Argentina), new Team(CountryEnum.Australia));
 
         sut.UpdateScore(match1, 0, 5);
         sut.UpdateScore(match2, 10, 2);
@@ -36,7 +36,7 @@ public class ScoreboardTests
     {
         var sut = new Scoreboard();
 
-        sut.StartNew("Mexico", "Canada");
+        sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
 
         var match = sut.GetInprogressMatches().First();
 
@@ -49,8 +49,8 @@ public class ScoreboardTests
     {
         var sut = new Scoreboard();
 
-        var matchId1 = sut.StartNew("Mexico", "Canada");
-        var matchId2 = sut.StartNew("Mexico", "Canada");
+        var matchId1 = sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
+        var matchId2 = sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
 
         var matchList = sut.GetInprogressMatches();
 
@@ -69,7 +69,7 @@ public class ScoreboardTests
     {
         var sut = new Scoreboard();
 
-        var matchId = sut.StartNew("Mexico", "Canada");
+        var matchId = sut.StartNew(new Team(CountryEnum.Mexico), new Team(CountryEnum.Canada));
 
         sut.UpdateScore(matchId, 0, 5);
 

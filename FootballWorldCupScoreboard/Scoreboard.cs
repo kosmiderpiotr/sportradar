@@ -4,7 +4,7 @@ public class Scoreboard
 {
     private List<Match> _matches { get; init; } = [];
 
-    public Guid StartNew(string homeTeam, string awayTeam)
+    public Guid StartNew(Team homeTeam, Team awayTeam)
     {
         var newMath = new Match(homeTeam, awayTeam);
 
