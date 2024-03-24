@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Text.RegularExpressions;
 using FluentAssertions;
@@ -10,15 +11,27 @@ public class ScoreboardTests
     public void GetInprogressMatchesTest()
     {
         var sut = new Scoreboard();
-        sut.StartNew("Mexico", "Canada");
-        sut.StartNew("Spain", "Brazil");
-        sut.StartNew("Germany", "France");
-        sut.StartNew("Uruguay", "Italy");
-        sut.StartNew("Argentina", "Australia");
+        var match1 = sut.StartNew("Mexico", "Canada");
+        var match2 = sut.StartNew("Spain", "Brazil");
+        var match3 = sut.StartNew("Germany", "France");
+        var match4 = sut.StartNew("Uruguay", "Italy");
+        var match5 = sut.StartNew("Argentina", "Australia");
+
+        sut.UpdateScore(match1, 0, 5);
+        sut.UpdateScore(match2, 10, 2);
+        sut.UpdateScore(match3, 2, 2);
+        sut.UpdateScore(match4, 6, 6);
+        sut.UpdateScore(match5, 3, 1);
+
 
         var inprogressMatchesList = sut.GetInprogressMatches();
 
         inprogressMatchesList.Should().HaveCount(5);
+        inprogressMatchesList[0].Should().Match<Match>(x => x.Id == match4);
+        inprogressMatchesList[1].Should().Match<Match>(x => x.Id == match2);
+        inprogressMatchesList[2].Should().Match<Match>(x => x.Id == match1);
+        inprogressMatchesList[3].Should().Match<Match>(x => x.Id == match5);
+        inprogressMatchesList[4].Should().Match<Match>(x => x.Id == match3);
     }
 
     [Fact]
